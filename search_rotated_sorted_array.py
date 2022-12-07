@@ -1,26 +1,32 @@
 class Solution:
     def search(self, nums, target) -> bool:
         
-        if(target > nums[-1] or target < nums[0]):
-            return False
         
         left = 0
         right = len(nums)-1
         
-        if target == nums[left] or target == nums[right]:
-            return True
+        
         # this will find the pivot
         i = 0
-        while nums[i]< nums[i+1]:
-            i +=1
-        i+=1
-            
+        if len(nums)<= 3:
+            return target in nums
+        else:
+            while i < len(nums)-2 and nums[i]<= nums[i+1]:
+                i +=1
+            i+=1
         if target > left:
             right = i-1
         else:
             left = i
         
         def search(target,num,left,right):
+            if target == nums[left] or target == nums[right]:
+                return True
+
+            if(target > nums[right] or target < nums[left]):
+                return False
+
+
             if right-left < 5:
                 for i in range(left,right+1):
                     if i == target:
@@ -33,6 +39,7 @@ class Solution:
                 else:
                     search(target,num,midPoint,right)
         return search(target,nums,left,right)
+    
     
 obj = Solution()
 
